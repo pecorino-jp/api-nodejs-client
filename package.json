@@ -1,0 +1,85 @@
+{
+  "name": "@motionpicture/pecorino-api-nodejs-client",
+  "version": "0.0.0",
+  "description": "PECORINO API client library for Node.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "doc",
+    "example",
+    "lib"
+  ],
+  "directories": {
+    "doc": "./doc",
+    "lib": "./lib",
+    "example": "./example",
+    "test": "./test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "check": "npm run tslint && nsp check",
+    "clean": "rimraf ./lib \"npm-debug.log*\" ./doc ./coverage ./.nyc_output",
+    "example": "http-server ./example",
+    "doc": "jsdoc -c jsdoc.json",
+    "mocha": "mocha",
+    "nyc": "nyc mocha \"src/**/*.spec.ts\"",
+    "coverage": "npm run nyc | coveralls",
+    "snyk": "snyk wizard",
+    "test": "npm run check && npm run coverage",
+    "tslint": "tslint --project tsconfig.json -c tslint.json --exclude \"**/*.spec.ts\" \"src/**/*.ts\"",
+    "preversion": "npm run clean && npm run build && npm test",
+    "version": "git add -A",
+    "postversion": "git push origin --tags",
+    "prepublishOnly": "npm run clean && npm run build && npm test && npm run doc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/motionpicture/pecorino-api-nodejs-client.git"
+  },
+  "keywords": [
+    "pecorino"
+  ],
+  "author": {
+    "name": "Motionpicture co.,ltd."
+  },
+  "contributors": [
+    {
+      "email": "yamazaki@motionpicture.jp",
+      "name": "Tetsu Yamazaki"
+    }
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@types/debug": "0.0.30",
+    "@types/form-data": "^2.2.1",
+    "@types/http-status": "^0.2.30",
+    "@types/isomorphic-fetch": "0.0.34",
+    "@types/mocha": "^2.2.47",
+    "@types/open": "0.0.29",
+    "@types/power-assert": "^1.4.29",
+    "@types/request": "^2.47.0",
+    "coveralls": "^3.0.0",
+    "http-server": "^0.11.1",
+    "ink-docstrap": "^1.3.2",
+    "jsdoc": "^3.5.5",
+    "mocha": "^5.0.0",
+    "nock": "^9.1.6",
+    "nsp": "^3.1.0",
+    "nyc": "^11.4.1",
+    "open": "0.0.5",
+    "power-assert": "^1.4.4",
+    "request": "^2.83.0",
+    "rimraf": "^2.6.2",
+    "snyk": "^1.69.5",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "tslint-microsoft-contrib": "^5.0.2",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "@motionpicture/pecorino-api-abstract-client": "0.0.0-alpha.0",
+    "debug": "^3.1.0",
+    "http-status": "^1.0.1",
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
