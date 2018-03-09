@@ -1,5 +1,5 @@
 /**
- * 支払取引サンプル
+ * 転送取引サンプル
  * @ignore
  */
 
@@ -22,19 +22,19 @@ oauth2client.setCredentials({
     access_token: process.env.TEST_ACCESS_TOKEN
 });
 
-const payTransactionService4backend = new pecorinoapi.service.transaction.Pay({
+const transferTransactionService4backend = new pecorinoapi.service.transaction.Transfer({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
-const payTransactionService4frontend = new pecorinoapi.service.transaction.Pay({
+const transferTransactionService4frontend = new pecorinoapi.service.transaction.Transfer({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: oauth2client
 });
 
 async function main() {
     // フロントエンドで取引開始
-    const transaction = await payTransactionService4frontend.start({
+    const transaction = await transferTransactionService4frontend.start({
         expires: moment().add(10, 'minutes').toISOString(),
         recipient: {
             typeOf: 'Person',
@@ -43,14 +43,15 @@ async function main() {
             url: 'https://example.com'
         },
         price: 100,
-        notes: 'notes'
+        notes: 'notes',
+        toAccountId: 'sskts-movieTheater-118'
     });
     console.log('取引が開始されました。', transaction.id);
 
     await wait(1000);
 
     // バックエンドで確定
-    const transactionResult = await payTransactionService4backend.confirm({
+    const transactionResult = await transferTransactionService4backend.confirm({
         transactionId: transaction.id
     });
     console.log('取引確定です。');
