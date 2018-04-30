@@ -26,13 +26,19 @@ const transferTransactionService4backend = new pecorinoapi.service.transaction.T
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
-
 const transferTransactionService4frontend = new pecorinoapi.service.transaction.Transfer({
+    endpoint: process.env.TEST_API_ENDPOINT,
+    auth: oauth2client
+});
+const userService = new pecorinoapi.service.User({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: oauth2client
 });
 
 async function main() {
+    const accounts = await userService.findAccounts();
+    console.log(accounts.length, 'accounts found.');
+
     // フロントエンドで取引開始
     const transaction = await transferTransactionService4frontend.start({
         expires: moment().add(10, 'minutes').toISOString(),
@@ -44,7 +50,8 @@ async function main() {
         },
         price: 100,
         notes: 'notes',
-        toAccountId: 'sskts-movieTheater-118'
+        fromAccountId: accounts[0].id,
+        toAccountId: '5ae5b6f7df42e40fec9933dc'
     });
     console.log('取引が開始されました。', transaction.id);
 

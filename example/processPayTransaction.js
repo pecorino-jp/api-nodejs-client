@@ -26,13 +26,19 @@ const payTransactionService4backend = new pecorinoapi.service.transaction.Pay({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
-
 const payTransactionService4frontend = new pecorinoapi.service.transaction.Pay({
+    endpoint: process.env.TEST_API_ENDPOINT,
+    auth: oauth2client
+});
+const userService = new pecorinoapi.service.User({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: oauth2client
 });
 
 async function main() {
+    const accounts = await userService.findAccounts();
+    console.log(accounts.length, 'accounts found.');
+
     // フロントエンドで取引開始
     const transaction = await payTransactionService4frontend.start({
         expires: moment().add(10, 'minutes').toISOString(),
@@ -43,7 +49,8 @@ async function main() {
             url: 'https://example.com'
         },
         price: 100,
-        notes: 'notes'
+        notes: 'notes',
+        fromAccountId: accounts[0].id
     });
     console.log('取引が開始されました。', transaction.id);
 

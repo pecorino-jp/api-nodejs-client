@@ -5,7 +5,7 @@
 
 const moment = require('moment');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const pecorinoapi = require('../../lib/');
 
 const oauth2client = new pecorinoapi.auth.OAuth2({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN
@@ -14,13 +14,17 @@ oauth2client.setCredentials({
     access_token: process.env.TEST_ACCESS_TOKEN
 });
 
-const accountService = new pecorinoapi.service.Account({
+const userService = new pecorinoapi.service.User({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: oauth2client
 });
 
 async function main() {
-    const actions = await accountService.searchTransferActions({ accountId: 'me' });
+    const accounts = await userService.findAccounts();
+    console.log(accounts.length, 'accounts found.');
+
+    console.log('searching actions...account:', accounts[0].id);
+    const actions = await userService.searchMoneyTransferActions({ accountId: accounts[0].id });
     console.log('取引履歴は以下の通りです。');
     console.log(actions.map((a) => {
         return util.format(

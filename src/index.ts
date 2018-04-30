@@ -1,6 +1,5 @@
 /**
  * PECORINO API Node.js Client
- * @ignore
  */
 
 import * as pecorinoapi from '@motionpicture/pecorino-api-abstract-client';
@@ -12,10 +11,8 @@ import OAuth2client from './auth/oAuth2client';
  * factory
  * All object interfaces are here.
  * 全てのオブジェクトのインターフェースはここに含まれます。
- * @export
  */
-// export import factory = pecorinoapi.factory;
-
+export import factory = pecorinoapi.factory;
 export import service = pecorinoapi.service;
 export import transporters = pecorinoapi.transporters;
 
