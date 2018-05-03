@@ -56,6 +56,12 @@ async function main() {
 
     await wait(1000);
 
+    // 中止の場合
+    // await payTransactionService4frontend.cancel({
+    //     transactionId: transaction.id
+    // });
+    // console.log('取引を中止しました。');
+
     // バックエンドで確定
     const transactionResult = await payTransactionService4backend.confirm({
         transactionId: transaction.id
