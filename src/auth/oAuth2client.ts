@@ -299,18 +299,21 @@ export default class OAuth2client implements Auth {
                 // tslint:disable-next-line:no-single-line-block-comment
                 /* istanbul ignore else */
                 if (error instanceof Error) {
+                    // 401 or 403の場合、一度だけトークンのリフレッシュを試みる
                     const statusCode = (<transporters.RequestError>error).code;
-
                     if (retry && (statusCode === UNAUTHORIZED || statusCode === FORBIDDEN)) {
                         /* It only makes sense to retry once, because the retry is intended
                          * to handle expiration-related failures. If refreshing the token
                          * does not fix the failure, then refreshing again probably won't
                          * help */
 
-                        // Force token refresh
-                        await this.refreshAccessToken();
-
-                        continue;
+                        // tslint:disable-next-line:no-single-line-block-comment
+                        /* istanbul ignore else */
+                        if (this.credentials.refresh_token !== undefined) {
+                            // Force token refresh
+                            await this.refreshAccessToken();
+                            continue;
+                        }
                     }
                 }
 
