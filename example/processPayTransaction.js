@@ -11,37 +11,20 @@ const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
     clientId: process.env.TEST_CLIENT_ID,
     clientSecret: process.env.TEST_CLIENT_SECRET,
-    scopes: [
-    ]
+    scopes: []
 });
-
-const oauth2client = new pecorinoapi.auth.OAuth2({
-    domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN
-});
-oauth2client.setCredentials({
-    access_token: process.env.TEST_ACCESS_TOKEN
-});
-
-const payTransactionService4backend = new pecorinoapi.service.transaction.Pay({
+const payTransactionService = new pecorinoapi.service.transaction.Pay({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
-const payTransactionService4frontend = new pecorinoapi.service.transaction.Pay({
-    endpoint: process.env.TEST_API_ENDPOINT,
-    auth: oauth2client
-});
-const userService = new pecorinoapi.service.User({
-    endpoint: process.env.TEST_API_ENDPOINT,
-    auth: oauth2client
-});
 
 async function main() {
-    const accounts = await userService.findAccounts();
-    console.log(accounts.length, 'accounts found.');
-
     // フロントエンドで取引開始
-    const transaction = await payTransactionService4frontend.start({
+    const transaction = await payTransactionService.start({
         expires: moment().add(10, 'minutes').toISOString(),
+        agent: {
+            name: 'agentName'
+        },
         recipient: {
             typeOf: 'Person',
             id: 'recipientId',
@@ -50,7 +33,7 @@ async function main() {
         },
         price: 100,
         notes: 'notes',
-        fromAccountId: accounts[0].id
+        fromAccountId: '5ae9797906272300a1aae3f7'
     });
     console.log('取引が開始されました。', transaction.id);
 
@@ -63,7 +46,7 @@ async function main() {
     // console.log('取引を中止しました。');
 
     // バックエンドで確定
-    const transactionResult = await payTransactionService4backend.confirm({
+    const transactionResult = await payTransactionService.confirm({
         transactionId: transaction.id
     });
     console.log('取引確定です。');

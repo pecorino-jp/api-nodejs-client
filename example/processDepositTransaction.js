@@ -11,24 +11,15 @@ const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
     clientId: process.env.TEST_CLIENT_ID,
     clientSecret: process.env.TEST_CLIENT_SECRET,
-    scopes: [
-    ]
+    scopes: []
 });
-
-const oauth2client = new pecorinoapi.auth.OAuth2({
-    domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN
-});
-oauth2client.setCredentials({
-    access_token: process.env.TEST_ACCESS_TOKEN
-});
-
-const depositTransactionService4backend = new pecorinoapi.service.transaction.Deposit({
+const depositTransactionService = new pecorinoapi.service.transaction.Deposit({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
 async function main() {
-    const transaction = await depositTransactionService4backend.start({
+    const transaction = await depositTransactionService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
             typeOf: 'Organization',
@@ -44,14 +35,14 @@ async function main() {
         },
         price: 100,
         notes: 'incentive',
-        toAccountId: 'sskts-ilovegadd'
+        toAccountId: '5ae9797906272300a1aae3f7'
     });
     console.log('取引が開始されました。', transaction.id);
 
     await wait(1000);
 
     // バックエンドで確定
-    const transactionResult = await depositTransactionService4backend.confirm({
+    const transactionResult = await depositTransactionService.confirm({
         transactionId: transaction.id
     });
     console.log('取引確定です。');
