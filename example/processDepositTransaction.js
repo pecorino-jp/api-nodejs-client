@@ -1,9 +1,11 @@
 /**
- * 支払取引サンプル
+ * 入金取引サンプル
  * @ignore
  */
 
 const moment = require('moment');
+const open = require('open');
+const readline = require('readline');
 const util = require('util');
 const pecorinoapi = require('../lib/');
 
@@ -19,23 +21,40 @@ const depositTransactionService = new pecorinoapi.service.transaction.Deposit({
 });
 
 async function main() {
+    const { toAccountId, amount, notes } = await new Promise((resolve, reject) => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
+        rl.question('入金先の口座IDを入力してください。\n', async (toAccountId) => {
+            rl.question('入金金額を入力してください。\n', async (amount) => {
+                rl.question('取引説明を入力してください。\n', async (notes) => {
+                    rl.close();
+                    resolve({ toAccountId, amount, notes });
+                });
+            });
+        });
+    });
+
+    console.log('取引が開始します...', toAccountId, amount, notes);
     const transaction = await depositTransactionService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
             typeOf: 'Organization',
-            id: 'agentId',
-            name: 'agent name',
-            url: 'https://example.com'
+            id: 'agent-id',
+            name: '株式会社モーションピクチャー',
+            url: 'https://motionpicture.jp'
         },
         recipient: {
             typeOf: 'Person',
-            id: 'recipientId',
-            name: 'recipientName',
-            url: 'https://example.com'
+            id: 'recipient-id',
+            name: 'recipient name',
+            url: ''
         },
-        price: 100,
-        notes: 'incentive',
-        toAccountId: '5ae9797906272300a1aae3f7'
+        price: amount,
+        notes: notes,
+        toAccountId: toAccountId
     });
     console.log('取引が開始されました。', transaction.id);
 
