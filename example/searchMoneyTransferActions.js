@@ -19,9 +19,9 @@ const accountService = new pecorinoapi.service.Account({
 });
 
 async function main() {
-    const accountId = '5ae9797906272300a1aae3f7';
-    console.log('searching actions...account:', accountId);
-    const actions = await accountService.searchMoneyTransferActions({ accountId: accountId });
+    const accountNumber = '41500180315';
+    console.log('searching actions...account:', accountNumber);
+    const actions = await accountService.searchMoneyTransferActions({ accountNumber: accountNumber });
     console.log('取引履歴は以下の通りです。');
     console.log(actions.map((a) => {
         return util.format(
@@ -30,9 +30,9 @@ async function main() {
             a.typeOf,
             a.amount,
             a.fromLocation.name,
-            (a.fromLocation.id !== undefined) ? a.fromLocation.id : '',
+            (a.fromLocation.accountNumber !== undefined) ? a.fromLocation.accountNumber : '',
             a.toLocation.name,
-            (a.toLocation.id !== undefined) ? a.toLocation.id : '',
+            (a.toLocation.accountNumber !== undefined) ? a.toLocation.accountNumber : '',
             a.purpose.typeOf
         );
     }).join('\n'));

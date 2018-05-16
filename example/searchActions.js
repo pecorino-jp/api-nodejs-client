@@ -25,8 +25,8 @@ async function main() {
         startDateFrom: moment().add(-1, 'month').toDate(),
         startDateThrough: moment().toDate(),
         // purposeTypeOfs?: factory.transactionType[];
-        fromLocationIds: ['5ae9797906272300a1aae3f7'],
-        // toLocationIds?: string[];
+        fromLocationAccountNumbers: ['41500180315'],
+        // toLocationAccountNumbers?: string[];
         limit: 100
     });
     console.log('actions:', actions);

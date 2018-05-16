@@ -31,10 +31,10 @@ async function main() {
             name: 'recipientName',
             url: 'https://example.com'
         },
-        price: 100,
+        amount: 100,
         notes: 'notes',
-        fromAccountId: '5ae6a058c32df6009951666d',
-        toAccountId: '5ae9797906272300a1aae3f7'
+        fromAccountNumber: '41500280015',
+        toAccountNumber: '41500180315'
     });
     console.log('取引が開始されました。', transaction.id);
 

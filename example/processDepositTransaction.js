@@ -21,23 +21,23 @@ const depositTransactionService = new pecorinoapi.service.transaction.Deposit({
 });
 
 async function main() {
-    const { toAccountId, amount, notes } = await new Promise((resolve, reject) => {
+    const { toAccountNumber, amount, notes } = await new Promise((resolve, reject) => {
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         });
 
-        rl.question('入金先の口座IDを入力してください。\n', async (toAccountId) => {
+        rl.question('入金先の口座番号を入力してください。\n', async (toAccountNumber) => {
             rl.question('入金金額を入力してください。\n', async (amount) => {
                 rl.question('取引説明を入力してください。\n', async (notes) => {
                     rl.close();
-                    resolve({ toAccountId, amount, notes });
+                    resolve({ toAccountNumber, amount, notes });
                 });
             });
         });
     });
 
-    console.log('取引が開始します...', toAccountId, amount, notes);
+    console.log('取引が開始します...', toAccountNumber, amount, notes);
     const transaction = await depositTransactionService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
@@ -52,9 +52,9 @@ async function main() {
             name: 'recipient name',
             url: ''
         },
-        price: amount,
+        amount: parseInt(amount, 10),
         notes: notes,
-        toAccountId: toAccountId
+        toAccountNumber: toAccountNumber
     });
     console.log('取引が開始されました。', transaction.id);
 
