@@ -1,11 +1,10 @@
 /**
  * 支払取引サンプル
- * @ignore
  */
-
 const moment = require('moment');
+const readline = require('readline');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const pecorinoapi = require('../../lib/');
 
 const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
@@ -13,14 +12,30 @@ const auth = new pecorinoapi.auth.ClientCredentials({
     clientSecret: process.env.TEST_CLIENT_SECRET,
     scopes: []
 });
-const payTransactionService = new pecorinoapi.service.transaction.Pay({
+const payService = new pecorinoapi.service.transaction.Pay({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
 async function main() {
-    // フロントエンドで取引開始
-    const transaction = await payTransactionService.start({
+    const { fromAccountNumber, amount, notes } = await new Promise((resolve, reject) => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
+        rl.question('支払元の口座番号を入力してください。\n', async (fromAccountNumber) => {
+            rl.question('支払金額を入力してください。\n', async (amount) => {
+                rl.question('取引説明を入力してください。\n', async (notes) => {
+                    rl.close();
+                    resolve({ fromAccountNumber, amount, notes });
+                });
+            });
+        });
+    });
+
+    // 取引開始
+    const transaction = await payService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
             name: 'agentName'
@@ -31,22 +46,22 @@ async function main() {
             name: 'recipientName',
             url: 'https://example.com'
         },
-        amount: 100,
-        notes: 'notes',
-        fromAccountNumber: '41500180315'
+        amount: amount,
+        notes: notes,
+        fromAccountNumber: fromAccountNumber
     });
     console.log('取引が開始されました。', transaction.id);
 
     await wait(1000);
 
     // 中止の場合
-    // await payTransactionService4frontend.cancel({
+    // await payService.cancel({
     //     transactionId: transaction.id
     // });
     // console.log('取引を中止しました。');
 
-    // バックエンドで確定
-    const transactionResult = await payTransactionService.confirm({
+    // 確定
+    await payService.confirm({
         transactionId: transaction.id
     });
     console.log('取引確定です。');

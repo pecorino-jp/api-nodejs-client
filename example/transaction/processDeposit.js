@@ -1,13 +1,11 @@
 /**
  * 入金取引サンプル
- * @ignore
  */
-
 const moment = require('moment');
 const open = require('open');
 const readline = require('readline');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const pecorinoapi = require('../../lib/');
 
 const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
@@ -15,7 +13,7 @@ const auth = new pecorinoapi.auth.ClientCredentials({
     clientSecret: process.env.TEST_CLIENT_SECRET,
     scopes: []
 });
-const depositTransactionService = new pecorinoapi.service.transaction.Deposit({
+const depositService = new pecorinoapi.service.transaction.Deposit({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
@@ -38,7 +36,7 @@ async function main() {
     });
 
     console.log('取引が開始します...', toAccountNumber, amount, notes);
-    const transaction = await depositTransactionService.start({
+    const transaction = await depositService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
             typeOf: 'Organization',
@@ -60,8 +58,8 @@ async function main() {
 
     await wait(1000);
 
-    // バックエンドで確定
-    const transactionResult = await depositTransactionService.confirm({
+    // 確定
+    await depositService.confirm({
         transactionId: transaction.id
     });
     console.log('取引確定です。');
