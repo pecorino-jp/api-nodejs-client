@@ -1,8 +1,6 @@
 /**
  * アクション検索サンプル
- * @ignore
  */
-
 const moment = require('moment');
 const util = require('util');
 const pecorinoapi = require('../lib/');

@@ -1,11 +1,9 @@
 /**
  * 口座解約サンプル
- * @ignore
  */
-
 const moment = require('moment');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const pecorinoapi = require('../../lib/');
 
 const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,

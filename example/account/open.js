@@ -1,11 +1,9 @@
 /**
- * 口座検索サンプル
- * @ignore
+ * 口座開設サンプル
  */
-
 const moment = require('moment');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const pecorinoapi = require('../../lib/');
 
 const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
@@ -19,13 +17,14 @@ const accountService = new pecorinoapi.service.Account({
 });
 
 async function main() {
-    const accounts = await accountService.search({
-        accountNumbers: ['41500180315']
+    const account = await accountService.open({
+        name: 'sample name'
     });
-    console.log('accounts:', accounts);
-    console.log(accounts.length, 'accounts found.');
+    console.log('口座を開設しました。', account.accountNumber);
 }
 
 main().then(() => {
     console.log('main processed.');
-}).catch(console.error);
+}).catch((err) => {
+    console.error(err);
+});

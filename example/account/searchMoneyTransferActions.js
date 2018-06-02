@@ -1,11 +1,9 @@
 /**
  * 取引履歴検索サンプル
- * @ignore
  */
-
 const moment = require('moment');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const pecorinoapi = require('../../lib/');
 
 const auth = new pecorinoapi.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
@@ -19,7 +17,7 @@ const accountService = new pecorinoapi.service.Account({
 });
 
 async function main() {
-    const accountNumber = '41500180315';
+    const accountNumber = '08102300052';
     console.log('searching actions...account:', accountNumber);
     const actions = await accountService.searchMoneyTransferActions({ accountNumber: accountNumber });
     console.log('取引履歴は以下の通りです。');
