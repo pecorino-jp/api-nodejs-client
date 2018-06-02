@@ -46,7 +46,7 @@ async function main() {
             name: 'recipientName',
             url: 'https://example.com'
         },
-        amount: amount,
+        amount: parseInt(amount, 10),
         notes: notes,
         fromAccountNumber: fromAccountNumber
     });
