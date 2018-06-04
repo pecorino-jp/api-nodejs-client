@@ -1,5 +1,5 @@
 /**
- * 支払取引サンプル
+ * 出金取引サンプル
  */
 const moment = require('moment');
 const readline = require('readline');
@@ -12,7 +12,7 @@ const auth = new pecorinoapi.auth.ClientCredentials({
     clientSecret: process.env.TEST_CLIENT_SECRET,
     scopes: []
 });
-const payService = new pecorinoapi.service.transaction.Pay({
+const withdrawService = new pecorinoapi.service.transaction.Withdraw({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
@@ -24,8 +24,8 @@ async function main() {
             output: process.stdout
         });
 
-        rl.question('支払元の口座番号を入力してください。\n', async (fromAccountNumber) => {
-            rl.question('支払金額を入力してください。\n', async (amount) => {
+        rl.question('出金元の口座番号を入力してください。\n', async (fromAccountNumber) => {
+            rl.question('出金金額を入力してください。\n', async (amount) => {
                 rl.question('取引説明を入力してください。\n', async (notes) => {
                     rl.close();
                     resolve({ fromAccountNumber, amount, notes });
@@ -35,7 +35,7 @@ async function main() {
     });
 
     // 取引開始
-    const transaction = await payService.start({
+    const transaction = await withdrawService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
             name: 'agentName'
@@ -55,13 +55,13 @@ async function main() {
     await wait(1000);
 
     // 中止の場合
-    // await payService.cancel({
+    // await withdrawService.cancel({
     //     transactionId: transaction.id
     // });
     // console.log('取引を中止しました。');
 
     // 確定
-    await payService.confirm({
+    await withdrawService.confirm({
         transactionId: transaction.id
     });
     console.log('取引確定です。');
