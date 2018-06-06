@@ -8,8 +8,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 
-- 認証クライアントを追加。
-
 ### Changed
 
 ### Deprecated
@@ -19,3 +17,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v0.0.0 - 2018-06-06
+
+### Added
+
+- 認証クライアントを追加。
