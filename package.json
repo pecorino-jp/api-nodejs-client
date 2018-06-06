@@ -5,12 +5,12 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "doc",
+    "docs",
     "example",
     "lib"
   ],
   "directories": {
-    "doc": "./doc",
+    "doc": "./docs",
     "lib": "./lib",
     "example": "./example",
     "test": "./test"
@@ -18,16 +18,16 @@
   "scripts": {
     "build": "tsc",
     "check": "npm run tslint && nsp check",
-    "clean": "rimraf ./lib \"npm-debug.log*\" ./doc ./coverage ./.nyc_output",
+    "clean": "rimraf ./lib \"npm-debug.log*\" ./docs ./coverage ./.nyc_output",
     "example": "http-server ./example",
-    "doc": "jsdoc -c jsdoc.json",
+    "doc": "echo \"implementing...\" && exit 0",
     "mocha": "mocha",
     "nyc": "nyc mocha \"src/**/*.spec.ts\"",
     "coverage": "npm run nyc | coveralls",
     "snyk": "snyk wizard",
     "test": "npm run check && npm run coverage",
     "tslint": "tslint --project tsconfig.json -c tslint.json --exclude \"**/*.spec.ts\" \"src/**/*.ts\"",
-    "preversion": "npm run clean && npm run build && npm test",
+    "preversion": "npm run clean && npm run build && npm test && npm run doc",
     "version": "git add -A",
     "postversion": "git push origin --tags",
     "prepublishOnly": "npm run clean && npm run build && npm test && npm run doc"
@@ -61,12 +61,10 @@
     "@types/request": "^2.47.0",
     "coveralls": "^3.0.1",
     "http-server": "^0.11.1",
-    "ink-docstrap": "^1.3.2",
-    "jsdoc": "^3.5.5",
     "mocha": "^5.2.0",
     "nock": "^9.3.0",
     "nsp": "^3.2.1",
-    "nyc": "^11.9.0",
+    "nyc": "^12.0.2",
     "open": "0.0.5",
     "power-assert": "^1.5.0",
     "request": "^2.87.0",
@@ -78,7 +76,7 @@
     "typescript": "^2.9.1"
   },
   "dependencies": {
-    "@motionpicture/pecorino-api-abstract-client": "0.0.0-alpha.14",
+    "@motionpicture/pecorino-api-abstract-client": "0.0.0",
     "debug": "^3.1.0",
     "http-status": "^1.1.2",
     "isomorphic-fetch": "^2.2.1"
