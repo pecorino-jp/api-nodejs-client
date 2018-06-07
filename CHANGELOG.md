@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- 取引開始時パラメーターの汎用性を向上。
+
 ### Deprecated
 
 ### Removed
