@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v0.0.2 - 2018-06-07
+
+### Fixed
+
+- 取引開始時パラメーターが正しくボディにセットされないバグを解消。
+
 ## v0.0.1 - 2018-06-07
 
 ### Changed
