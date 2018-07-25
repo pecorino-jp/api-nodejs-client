@@ -1,8 +1,7 @@
 /**
- * PECORINO API Node.js Client
+ * API Node.js Client
  */
-
-import * as pecorinoapi from '@motionpicture/pecorino-api-abstract-client';
+import * as pecorinoapi from '@pecorino/api-abstract-client';
 
 import ClientCredentialsClient from './auth/clientCredentialsClient';
 import OAuth2client from './auth/oAuth2client';

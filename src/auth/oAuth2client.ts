@@ -1,14 +1,13 @@
 /**
  * OAuth2クライアント
  */
-
 import * as crypto from 'crypto';
 import * as createDebug from 'debug';
 import { BAD_REQUEST, FORBIDDEN, OK, UNAUTHORIZED } from 'http-status';
 import * as fetch from 'isomorphic-fetch';
 import * as querystring from 'querystring';
 
-import { Auth, transporters } from '@motionpicture/pecorino-api-abstract-client';
+import { Auth, transporters } from '@pecorino/api-abstract-client';
 import ICredentials from './credentials';
 
 const debug = createDebug('pecorino-api-nodejs-client:auth:oAuth2client');
