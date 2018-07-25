@@ -1,14 +1,12 @@
 // tslint:disable:no-implicit-dependencies
-
 /**
  * clientCredentials client test
  * @ignore
  */
-
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from 'http-status';
 import * as nock from 'nock';
 import * as assert from 'power-assert';
-import * as sasaki from '../index';
+import * as client from '../index';
 
 const DOMAIN = 'DOMAIN';
 const CLIENT_ID = 'CLIENT_ID';
@@ -37,7 +35,7 @@ describe('getToken()', () => {
             .post('/token')
             .reply(OK, { access_token: 'abc123', refresh_token: 'abc123', expires_in: 1000, token_type: 'Bearer' });
 
-        const auth = new sasaki.auth.ClientCredentials({
+        const auth = new client.auth.ClientCredentials({
             domain: DOMAIN,
             clientId: CLIENT_ID,
             clientSecret: CLIENT_SECRET,
@@ -61,7 +59,7 @@ describe('getToken()', () => {
                 .post('/token')
                 .reply(statusCode, {});
 
-            const auth = new sasaki.auth.ClientCredentials({
+            const auth = new client.auth.ClientCredentials({
                 domain: DOMAIN,
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
@@ -95,7 +93,7 @@ describe('refreshAccessToken()', () => {
             .post('/token')
             .reply(OK, { access_token: 'abc123', refresh_token: 'abc123', expires_in: 1000, token_type: 'Bearer' });
 
-        const auth = new sasaki.auth.ClientCredentials({
+        const auth = new client.auth.ClientCredentials({
             domain: DOMAIN,
             clientId: CLIENT_ID,
             clientSecret: CLIENT_SECRET,
