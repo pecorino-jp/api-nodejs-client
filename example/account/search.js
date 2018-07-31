@@ -17,7 +17,8 @@ const accountService = new pecorinoapi.service.Account({
 
 async function main() {
     const accounts = await accountService.search({
-        accountNumbers: ['30128000513']
+        accountType: 'Coin',
+        accountNumbers: []
     });
     console.log('accounts:', accounts);
     console.log(accounts.length, 'accounts found.');

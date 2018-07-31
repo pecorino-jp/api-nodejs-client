@@ -1,7 +1,7 @@
 /**
  * 口座開設サンプル
  */
-const util = require('util');
+const moment = require('moment');
 const pecorinoapi = require('../../lib/');
 
 const auth = new pecorinoapi.auth.ClientCredentials({
@@ -17,7 +17,8 @@ const accountService = new pecorinoapi.service.Account({
 
 async function main() {
     const account = await accountService.open({
-        accountNumber: '60007118600',
+        accountType: 'Coin',
+        accountNumber: moment().unix().toString(),
         name: 'MOTION TARO'
     });
     console.log('口座を開設しました。', account.accountNumber);

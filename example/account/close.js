@@ -17,7 +17,8 @@ const accountService = new pecorinoapi.service.Account({
 
 async function main() {
     await accountService.close({
-        accountNumber: '30128000513'
+        accountType: 'Coin',
+        accountNumber: '1532938324'
     });
     console.log('解約しました。');
 }

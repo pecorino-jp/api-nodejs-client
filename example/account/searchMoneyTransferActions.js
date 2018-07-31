@@ -16,9 +16,12 @@ const accountService = new pecorinoapi.service.Account({
 });
 
 async function main() {
-    const accountNumber = '08102300052';
+    const accountNumber = '1532937590';
     console.log('searching actions...account:', accountNumber);
-    const actions = await accountService.searchMoneyTransferActions({ accountNumber: accountNumber });
+    const actions = await accountService.searchMoneyTransferActions({
+        accountType: 'Coin',
+        accountNumber: accountNumber
+    });
     console.log('取引履歴は以下の通りです。');
     console.log(actions.map((a) => {
         return util.format(

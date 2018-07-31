@@ -51,6 +51,7 @@ async function main() {
             url: ''
         },
         amount: parseInt(amount, 10),
+        accountType: 'Coin',
         notes: notes,
         toAccountNumber: toAccountNumber
     });
