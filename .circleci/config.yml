@@ -12,11 +12,11 @@ jobs:
       - run:
           name: npm version
           command: npm -v
-      - run:
-          name: configure npm for private modules
-          command: |
-            npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm whoami
+      # - run:
+      #     name: configure npm for private modules
+      #     command: |
+      #       npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+      #       npm whoami
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -59,7 +59,7 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: configure npm for private modules
+          name: NPM login
           command: |
             npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm whoami
@@ -75,7 +75,7 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: configure npm for private modules
+          name: NPM login
           command: |
             npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm whoami
