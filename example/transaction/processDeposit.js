@@ -5,15 +5,15 @@ const moment = require('moment');
 const open = require('open');
 const readline = require('readline');
 const util = require('util');
-const pecorinoapi = require('../../lib/');
+const client = require('../../lib/');
 
-const auth = new pecorinoapi.auth.ClientCredentials({
+const auth = new client.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
     clientId: process.env.TEST_CLIENT_ID,
     clientSecret: process.env.TEST_CLIENT_SECRET,
     scopes: []
 });
-const depositService = new pecorinoapi.service.transaction.Deposit({
+const depositService = new client.service.transaction.Deposit({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
