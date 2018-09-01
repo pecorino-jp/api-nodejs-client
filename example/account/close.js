@@ -2,15 +2,15 @@
  * 口座解約サンプル
  */
 const util = require('util');
-const pecorinoapi = require('../../lib/');
+const client = require('../../lib/');
 
-const auth = new pecorinoapi.auth.ClientCredentials({
+const auth = new client.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
     clientId: process.env.TEST_CLIENT_ID,
     clientSecret: process.env.TEST_CLIENT_SECRET,
     scopes: []
 });
-const accountService = new pecorinoapi.service.Account({
+const accountService = new client.service.Account({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });

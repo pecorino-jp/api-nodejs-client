@@ -3,22 +3,22 @@
  */
 const moment = require('moment');
 const util = require('util');
-const pecorinoapi = require('../lib/');
+const client = require('../lib/');
 
-const auth = new pecorinoapi.auth.ClientCredentials({
+const auth = new client.auth.ClientCredentials({
     domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
     clientId: process.env.TEST_CLIENT_ID,
     clientSecret: process.env.TEST_CLIENT_SECRET,
     scopes: []
 });
-const actionService = new pecorinoapi.service.Action({
+const actionService = new client.service.Action({
     endpoint: process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
 async function main() {
     const actions = await actionService.search({
-        typeOf: pecorinoapi.factory.actionType.MoneyTransfer,
+        typeOf: client.factory.actionType.MoneyTransfer,
         // actionStatuses?: factory.accountStatusType[];
         startDateFrom: moment().add(-1, 'month').toDate(),
         startDateThrough: moment().toDate(),
