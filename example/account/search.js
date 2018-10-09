@@ -15,21 +15,21 @@ const accountService = new client.service.Account({
 });
 
 async function main() {
-    const accounts = await accountService.search({
-        accountType: 'Coin',
+    const { totalCount, data } = await accountService.searchWithTotalCount({
+        accountType: 'Point',
         // name: 'TARO',
-        // accountNumbers: ['1532938324'],
+        // accountNumbers: ['61201118800'],
         // statuses: [client.factory.accountStatusType.Opened],
-        // limit: 1,
-        // page: 1,
+        limit: 10,
+        page: 1,
         sort: {
-            accountNumber: 1
-            // openDate: -1
+            // accountNumber: 1
+            openDate: -1
             // balance: 1
         }
     });
-    console.log('accounts:', accounts);
-    console.log(accounts.length, 'accounts found.');
+    console.log(totalCount, 'accounts found.');
+    console.log(data.length, 'accounts returned.');
 }
 
 main().then(() => {
