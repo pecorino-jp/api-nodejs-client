@@ -40,7 +40,10 @@ async function main() {
     const transaction = await transactionService.start({
         expires: moment().add(10, 'minutes').toISOString(),
         agent: {
-            name: 'agentName'
+            typeOf: 'Organization',
+            id: 'agent-id',
+            name: '株式会社モーションピクチャー',
+            url: 'https://motionpicture.jp'
         },
         recipient: {
             typeOf: 'Person',
@@ -49,7 +52,7 @@ async function main() {
             url: 'https://example.com'
         },
         amount: parseInt(amount, 10),
-        accountType: 'Coin',
+        accountType: 'Point',
         notes: notes,
         fromAccountNumber: fromAccountNumber,
         toAccountNumber: toAccountNumber

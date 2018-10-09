@@ -51,7 +51,7 @@ async function main() {
             url: ''
         },
         amount: parseInt(amount, 10),
-        accountType: 'Coin',
+        accountType: 'Point',
         notes: notes,
         toAccountNumber: toAccountNumber
     });

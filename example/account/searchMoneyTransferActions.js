@@ -16,20 +16,21 @@ const accountService = new client.service.Account({
 });
 
 async function main() {
-    const accountNumber = '1532937590';
+    const accountNumber = '60108118500';
     console.log('searching actions...account:', accountNumber);
-    const actions = await accountService.searchMoneyTransferActions({
-        accountType: 'Coin',
+    const { totalCount, data } = await accountService.searchMoneyTransferActionsWithTotalCount({
+        accountType: 'Point',
         accountNumber: accountNumber,
-        limit: 3,
+        limit: 10,
         page: 1,
         sort: {
             endDate: -1
             // amount: -1
         }
     });
+    console.log(totalCount, 'actions found');
     console.log('取引履歴は以下の通りです。');
-    console.log(actions.map((a) => {
+    console.log(data.map((a) => {
         return util.format(
             '%s %s %s %s[%s] -> %s[%s] @%s',
             a.endDate,
