@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- install @pecorino/factory@2.0.0
+
 ### Deprecated
 
 ### Removed
