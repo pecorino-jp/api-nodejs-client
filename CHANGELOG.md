@@ -10,8 +10,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
-- install @pecorino/factory@2.0.0
-
 ### Deprecated
 
 ### Removed
@@ -19,6 +17,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v2.0.0 - 2019-02-19
+
+### Changed
+
+- install @pecorino/factory@2.0.0
 
 ## v1.2.0 - 2018-10-09
 
