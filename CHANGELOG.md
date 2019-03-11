@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v3.0.0 - 2019-03-11
+
+### Changed
+
+- 取引サービスのインターフェースを@pecorino/factory@2.0.0対して最適化
+
 ## v2.0.0 - 2019-02-19
 
 ### Changed

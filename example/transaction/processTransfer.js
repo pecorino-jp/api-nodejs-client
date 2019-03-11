@@ -36,13 +36,13 @@ async function main() {
         });
     });
 
-    // フロントエンドで取引開始
+    // 取引開始
     const transaction = await transactionService.start({
-        expires: moment().add(10, 'minutes').toISOString(),
+        expires: moment().add(10, 'minutes').toDate(),
         agent: {
             typeOf: 'Organization',
             id: 'agent-id',
-            name: '株式会社モーションピクチャー',
+            name: 'Pecorino SDK Sample',
             url: 'https://motionpicture.jp'
         },
         recipient: {
@@ -51,11 +51,18 @@ async function main() {
             name: 'recipientName',
             url: 'https://example.com'
         },
-        amount: parseInt(amount, 10),
-        accountType: 'Point',
-        notes: notes,
-        fromAccountNumber: fromAccountNumber,
-        toAccountNumber: toAccountNumber
+        object: {
+            amount: parseInt(amount, 10),
+            description: notes,
+            fromLocation: {
+                accountType: 'Coin',
+                accountNumber: fromAccountNumber,
+            },
+            toLocation: {
+                accountType: 'Coin',
+                accountNumber: toAccountNumber
+            }
+        }
     });
     console.log('取引が開始されました。', transaction.id);
 
@@ -67,9 +74,7 @@ async function main() {
     // console.log('取引を中止しました。');
 
     // 確定
-    await transactionService.confirm({
-        transactionId: transaction.id
-    });
+    await transactionService.confirm(transaction);
     console.log('取引確定です。');
 }
 
