@@ -37,11 +37,11 @@ async function main() {
 
     console.log('取引が開始します...', toAccountNumber, amount, notes);
     const transaction = await depositService.start({
-        expires: moment().add(10, 'minutes').toISOString(),
+        expires: moment().add(10, 'minutes').toDate(),
         agent: {
             typeOf: 'Organization',
             id: 'agent-id',
-            name: '株式会社モーションピクチャー',
+            name: 'Pecorino SDK Sample',
             url: 'https://motionpicture.jp'
         },
         recipient: {
@@ -50,19 +50,21 @@ async function main() {
             name: 'recipient name',
             url: ''
         },
-        amount: parseInt(amount, 10),
-        accountType: 'Point',
-        notes: notes,
-        toAccountNumber: toAccountNumber
+        object: {
+            amount: parseInt(amount, 10),
+            description: notes,
+            toLocation: {
+                accountType: 'Coin',
+                accountNumber: toAccountNumber
+            }
+        }
     });
     console.log('取引が開始されました。', transaction.id);
 
     await wait(1000);
 
     // 確定
-    await depositService.confirm({
-        transactionId: transaction.id
-    });
+    await depositService.confirm(transaction);
     console.log('取引確定です。');
 }
 

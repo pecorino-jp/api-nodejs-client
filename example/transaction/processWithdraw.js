@@ -36,11 +36,11 @@ async function main() {
 
     // 取引開始
     const transaction = await withdrawService.start({
-        expires: moment().add(10, 'minutes').toISOString(),
+        expires: moment().add(10, 'minutes').toDate(),
         agent: {
             typeOf: 'Organization',
             id: 'agent-id',
-            name: '株式会社モーションピクチャー',
+            name: 'Pecorino SDK Sample',
             url: 'https://motionpicture.jp'
         },
         recipient: {
@@ -49,10 +49,14 @@ async function main() {
             name: 'recipientName',
             url: 'https://example.com'
         },
-        amount: parseInt(amount, 10),
-        accountType: 'Point',
-        notes: notes,
-        fromAccountNumber: fromAccountNumber
+        object: {
+            amount: parseInt(amount, 10),
+            fromLocation: {
+                accountType: 'Coin',
+                accountNumber: fromAccountNumber
+            },
+            description: notes,
+        }
     });
     console.log('取引が開始されました。', transaction.id);
 
@@ -65,9 +69,7 @@ async function main() {
     // console.log('取引を中止しました。');
 
     // 確定
-    await withdrawService.confirm({
-        transactionId: transaction.id
-    });
+    await withdrawService.confirm(transaction);
     console.log('取引確定です。');
 }
 

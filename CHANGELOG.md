@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- 取引サービスのインターフェースを@pecorino/factory@2.0.0対して最適化
+
 ### Deprecated
 
 ### Removed
