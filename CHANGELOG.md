@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - 転送アクション検索条件を拡張
 - 口座開設時のプロジェクト指定を必須化
 - 取引開始時のプロジェクト指定を必須化
+- update typescript
 
 ### Deprecated
 

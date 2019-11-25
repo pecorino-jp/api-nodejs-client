@@ -18,7 +18,7 @@ const accountService = new client.service.Account({
 async function main() {
     await accountService.close({
         accountType: 'Coin',
-        accountNumber: '1539069875'
+        accountNumber: '1574640851'
     });
     console.log('解約しました。');
 }

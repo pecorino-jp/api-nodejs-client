@@ -37,6 +37,7 @@ async function main() {
 
     console.log('取引が開始します...', toAccountNumber, amount, notes);
     const transaction = await depositService.start({
+        project: { typeOf: 'Project', id: 'cinerino' },
         expires: moment().add(10, 'minutes').toDate(),
         agent: {
             typeOf: 'Organization',
