@@ -18,7 +18,7 @@ const accountService = new client.service.Account({
 async function main() {
     const accountNumber = '60108118500';
     console.log('searching actions...account:', accountNumber);
-    const { totalCount, data } = await accountService.searchMoneyTransferActionsWithTotalCount({
+    const { totalCount, data } = await accountService.searchMoneyTransferActions({
         accountType: 'Point',
         accountNumber: accountNumber,
         limit: 10,

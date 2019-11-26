@@ -15,7 +15,8 @@ const accountService = new client.service.Account({
 });
 
 async function main() {
-    const { totalCount, data } = await accountService.searchWithTotalCount({
+    const { totalCount, data } = await accountService.search({
+        // project: { id: { $eq: '' } },
         accountType: 'Point',
         // name: 'TARO',
         // accountNumbers: ['61201118800'],

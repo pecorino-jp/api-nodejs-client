@@ -17,6 +17,7 @@ const accountService = new client.service.Account({
 
 async function main() {
     const account = await accountService.open({
+        project: { typeOf: 'Project', id: 'cinerino' },
         accountType: 'Coin',
         accountNumber: moment().unix().toString(),
         name: 'MOTION TARO'

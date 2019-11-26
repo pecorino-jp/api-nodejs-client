@@ -38,6 +38,7 @@ async function main() {
 
     // 取引開始
     const transaction = await transactionService.start({
+        project: { typeOf: 'Project', id: 'cinerino' },
         expires: moment().add(10, 'minutes').toDate(),
         agent: {
             typeOf: 'Organization',

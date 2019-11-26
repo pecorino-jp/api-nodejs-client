@@ -18,6 +18,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v4.0.0 - 2019-11-26
+
+### Changed
+
+- 口座検索条件を拡張
+- 転送アクション検索条件を拡張
+- 口座開設時のプロジェクト指定を必須化
+- 取引開始時のプロジェクト指定を必須化
+- update typescript
+
 ## v3.2.0 - 2019-06-22
 
 ### Added
