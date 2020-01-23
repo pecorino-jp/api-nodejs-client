@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
+- 各リソース検索についてX-Total-Countが未定義の場合に対応
+
 ### Deprecated
 
 ### Removed
