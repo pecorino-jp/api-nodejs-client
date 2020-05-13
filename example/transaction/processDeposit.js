@@ -18,26 +18,32 @@ const depositService = new client.service.transaction.Deposit({
     auth: auth
 });
 
+const project = { typeOf: 'Project', id: 'cinerino' };
+
 async function main() {
-    const { toAccountNumber, amount, notes } = await new Promise((resolve, reject) => {
+    const { accountType, toAccountNumber, amount, notes } = await new Promise((resolve, reject) => {
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         });
 
-        rl.question('入金先の口座番号を入力してください。\n', async (toAccountNumber) => {
-            rl.question('入金金額を入力してください。\n', async (amount) => {
-                rl.question('取引説明を入力してください。\n', async (notes) => {
-                    rl.close();
-                    resolve({ toAccountNumber, amount, notes });
+        rl.question('入金先の口座タイプを入力してください。\n', async (accountType) => {
+            rl.question('入金先の口座番号を入力してください。\n', async (toAccountNumber) => {
+                rl.question('入金金額を入力してください。\n', async (amount) => {
+                    rl.question('取引説明を入力してください。\n', async (notes) => {
+                        rl.close();
+                        resolve({ accountType, toAccountNumber, amount, notes });
+                    });
                 });
             });
         });
     });
 
+    const transactionNumber = `${project.id}-${(new Date()).valueOf()}`;
     console.log('取引が開始します...', toAccountNumber, amount, notes);
     const transaction = await depositService.start({
-        project: { typeOf: 'Project', id: 'cinerino' },
+        transactionNumber: transactionNumber,
+        project: project,
         expires: moment().add(10, 'minutes').toDate(),
         agent: {
             typeOf: 'Organization',
@@ -55,17 +61,18 @@ async function main() {
             amount: parseInt(amount, 10),
             description: notes,
             toLocation: {
-                accountType: 'Coin',
+                accountType: accountType,
                 accountNumber: toAccountNumber
             }
         }
     });
-    console.log('取引が開始されました。', transaction.id);
+    console.log('取引が開始されました。', transaction.transactionNumber);
 
     await wait(1000);
 
     // 確定
-    await depositService.confirm(transaction);
+    await depositService.cancel({ typeOf: transaction.typeOf, transactionNumber: transactionNumber });
+    // await depositService.confirm({ typeOf: transaction.typeOf, transactionNumber: transactionNumber });
     console.log('取引確定です。');
 }
 

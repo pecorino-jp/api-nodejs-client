@@ -18,6 +18,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v5.0.0 - 2020-05-13
+
+### Added
+
+- 取引に取引番号を追加
+
+### Changed
+
+- 各リソース検索についてX-Total-Countが未定義の場合に対応
+- 取引番号にて取引ステータスを変更できるように調整
+
 ## v4.0.0 - 2019-11-26
 
 ### Changed
