@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v5.3.0 - 2020-09-24
+
+### Changed
+
+- 口座の取引履歴検索時に口座タイプを指定しなくてもよいように調整
+- 処理は口座のtypeOfに依存しないように調整
+
 ## v5.2.0 - 2020-09-23
 
 ### Changed
