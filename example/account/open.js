@@ -16,13 +16,23 @@ const accountService = new client.service.Account({
 });
 
 async function main() {
-    const account = await accountService.open({
-        project: { typeOf: 'Project', id: 'cinerino' },
-        accountType: 'Coin',
-        accountNumber: moment().unix().toString(),
-        name: 'MOTION TARO'
-    });
-    console.log('口座を開設しました。', account.accountNumber);
+    const timestamp = moment().valueOf();
+
+    const accounts = await accountService.open([
+        {
+            project: { typeOf: 'Project', id: 'cinerino' },
+            accountType: 'Coin',
+            accountNumber: `${timestamp}-01`,
+            name: 'MOTION TARO'
+        },
+        {
+            project: { typeOf: 'Project', id: 'cinerino' },
+            accountType: 'Coin',
+            accountNumber: `${timestamp}-02`,
+            name: 'MOTION TARO'
+        }
+    ]);
+    console.log('口座を開設しました。', accounts.map((account) => account.accountNumber));
 }
 
 main().then(() => {
