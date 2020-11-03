@@ -10,9 +10,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
-- 口座検索条件拡張
-- 口座開設を複数口座に対応
-
 ### Deprecated
 
 ### Removed
@@ -20,6 +17,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v5.4.0 - 2020-11-03
+
+### Changed
+
+- 口座検索条件拡張
+- 口座開設を複数口座に対応
 
 ## v5.3.0 - 2020-09-24
 
