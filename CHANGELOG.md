@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v5.5.0 - 2020-11-08
+
+- update @pecorino/factory
+- 検索結果インターフェースからtotalCountを削除
+
 ## v5.4.1 - 2020-11-06
 
 ### Changed
