@@ -10,9 +10,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 
-- update @pecorino/factory
-- 検索結果インターフェースからtotalCountを削除
-
 ### Deprecated
 
 ### Removed
@@ -20,6 +17,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 ### Fixed
 
 ### Security
+
+## v5.5.0 - 2020-11-08
+
+- update @pecorino/factory
+- 検索結果インターフェースからtotalCountを削除
 
 ## v5.4.1 - 2020-11-06
 
