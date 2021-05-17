@@ -1,6 +1,6 @@
 {
   "name": "@pecorino/api-nodejs-client",
-  "version": "5.5.2",
+  "version": "5.5.3",
   "description": "Pecorino API Client Library for Node.js",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
