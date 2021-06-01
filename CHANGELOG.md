@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Security
 
+## v5.6.0 - 2021-06-01
+
+### Changed
+
+- 口座取引の金額の型をIMonetaryAmountに統一
+- 口座取引開始パラメータの互換性維持対応を削除
+
 ## v5.5.6 - 2021-06-01
 
 ### Changed
