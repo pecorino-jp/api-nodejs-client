@@ -1,24 +1,30 @@
+// tslint:disable:no-console no-implicit-dependencies no-magic-numbers no-shadowed-variable
 /**
  * 出金取引サンプル
  */
-const moment = require('moment');
-const readline = require('readline');
-const util = require('util');
-const client = require('../../lib/');
+import * as  moment from 'moment';
+// import * as  open from 'open';
+import * as  readline from 'readline';
+// import * as  util from 'util';
+
+import * as  client from '../../../lib/';
 
 const auth = new client.auth.ClientCredentials({
-    domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
-    clientId: process.env.TEST_CLIENT_ID,
-    clientSecret: process.env.TEST_CLIENT_SECRET,
-    scopes: []
+    domain: <string>process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
+    clientId: <string>process.env.TEST_CLIENT_ID,
+    clientSecret: <string>process.env.TEST_CLIENT_SECRET,
+    scopes: [],
+    state: ''
 });
 const withdrawService = new client.service.transaction.Withdraw({
-    endpoint: process.env.TEST_API_ENDPOINT,
+    endpoint: <string>process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
+const project = { typeOf: client.factory.organizationType.Project, id: 'cinerino' };
+
 async function main() {
-    const { fromAccountNumber, amount, notes } = await new Promise((resolve, reject) => {
+    const { fromAccountNumber, amount, notes } = await new Promise((resolve) => {
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
@@ -36,27 +42,30 @@ async function main() {
 
     // 取引開始
     const transaction = await withdrawService.start({
-        project: { typeOf: 'Project', id: 'cinerino' },
-        expires: moment().add(10, 'minutes').toDate(),
+        typeOf: client.factory.account.transactionType.Withdraw,
+        project: { typeOf: client.factory.organizationType.Project, id: project.id },
+        expires: moment()
+            .add(10, 'minutes')
+            .toDate(),
         agent: {
-            typeOf: 'Organization',
+            typeOf: client.factory.organizationType.Corporation,
+            project: { typeOf: client.factory.organizationType.Project, id: project.id },
             id: 'agent-id',
             name: 'Pecorino SDK Sample',
             url: 'https://motionpicture.jp'
         },
         recipient: {
-            typeOf: 'Person',
+            typeOf: client.factory.personType.Person,
             id: 'recipientId',
             name: 'recipientName',
             url: 'https://example.com'
         },
         object: {
-            amount: parseInt(amount, 10),
+            amount: { value: Number(amount) },
             fromLocation: {
-                accountType: 'Coin',
                 accountNumber: fromAccountNumber
             },
-            description: notes,
+            description: notes
         }
     });
     console.log('取引が開始されました。', transaction.id);
@@ -74,12 +83,12 @@ async function main() {
     console.log('取引確定です。');
 }
 
-async function wait(waitInMilliseconds) {
+async function wait(waitInMilliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, waitInMilliseconds));
 }
 
-main().then(() => {
-    console.log('main processed.');
-}).catch((err) => {
-    console.error(err);
-});
+main()
+    .then(() => {
+        console.log('main processed.');
+    })
+    .catch(console.error);

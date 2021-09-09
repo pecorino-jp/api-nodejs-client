@@ -1,21 +1,23 @@
+// tslint:disable:no-console
 /**
  * 口座検索サンプル
  */
-const client = require('../../lib/');
+import * as  client from '../../../lib/';
 
 const auth = new client.auth.ClientCredentials({
-    domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
-    clientId: process.env.TEST_CLIENT_ID,
-    clientSecret: process.env.TEST_CLIENT_SECRET,
-    scopes: []
+    domain: <string>process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
+    clientId: <string>process.env.TEST_CLIENT_ID,
+    clientSecret: <string>process.env.TEST_CLIENT_SECRET,
+    scopes: [],
+    state: ''
 });
 const accountService = new client.service.Account({
-    endpoint: process.env.TEST_API_ENDPOINT,
+    endpoint: <string>process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
 async function main() {
-    const { totalCount, data } = await accountService.search({
+    const { data } = await accountService.search({
         // project: { id: { $eq: '' } },
         accountType: 'Point',
         // name: 'TARO',
@@ -29,10 +31,11 @@ async function main() {
             // balance: 1
         }
     });
-    console.log(totalCount, 'accounts found.');
     console.log(data.length, 'accounts returned.');
 }
 
-main().then(() => {
-    console.log('main processed.');
-}).catch(console.error);
+main()
+    .then(() => {
+        console.log('main processed.');
+    })
+    .catch(console.error);

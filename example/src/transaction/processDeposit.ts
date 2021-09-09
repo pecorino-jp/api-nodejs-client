@@ -1,38 +1,41 @@
+// tslint:disable:no-console no-implicit-dependencies no-magic-numbers no-shadowed-variable
 /**
  * 入金取引サンプル
  */
-const moment = require('moment');
-const open = require('open');
-const readline = require('readline');
-const util = require('util');
-const client = require('../../lib/');
+import * as  moment from 'moment';
+// import * as  open from 'open';
+import * as  readline from 'readline';
+// import * as  util from 'util';
+
+import * as  client from '../../../lib/';
 
 const auth = new client.auth.ClientCredentials({
-    domain: process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
-    clientId: process.env.TEST_CLIENT_ID,
-    clientSecret: process.env.TEST_CLIENT_SECRET,
-    scopes: []
+    domain: <string>process.env.TEST_AUTHORIZE_SERVER_DOMAIN,
+    clientId: <string>process.env.TEST_CLIENT_ID,
+    clientSecret: <string>process.env.TEST_CLIENT_SECRET,
+    scopes: [],
+    state: ''
 });
 const depositService = new client.service.transaction.Deposit({
-    endpoint: process.env.TEST_API_ENDPOINT,
+    endpoint: <string>process.env.TEST_API_ENDPOINT,
     auth: auth
 });
 
-const project = { typeOf: 'Project', id: 'cinerino' };
+const project = { typeOf: client.factory.organizationType.Project, id: 'cinerino' };
 
 async function main() {
-    const { accountType, toAccountNumber, amount, notes } = await new Promise((resolve, reject) => {
+    const { toAccountNumber, amount, notes } = await new Promise((resolve) => {
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         });
 
-        rl.question('入金先の口座タイプを入力してください。\n', async (accountType) => {
+        rl.question('入金先の口座タイプを入力してください。\n', async (__) => {
             rl.question('入金先の口座番号を入力してください。\n', async (toAccountNumber) => {
                 rl.question('入金金額を入力してください。\n', async (amount) => {
                     rl.question('取引説明を入力してください。\n', async (notes) => {
                         rl.close();
-                        resolve({ accountType, toAccountNumber, amount, notes });
+                        resolve({ toAccountNumber, amount, notes });
                     });
                 });
             });
@@ -42,26 +45,29 @@ async function main() {
     const transactionNumber = `${project.id}-${(new Date()).valueOf()}`;
     console.log('取引が開始します...', toAccountNumber, amount, notes);
     const transaction = await depositService.start({
+        typeOf: client.factory.account.transactionType.Deposit,
         transactionNumber: transactionNumber,
-        project: project,
-        expires: moment().add(10, 'minutes').toDate(),
+        project: { typeOf: client.factory.organizationType.Project, id: project.id },
+        expires: moment()
+            .add(10, 'minutes')
+            .toDate(),
         agent: {
-            typeOf: 'Organization',
+            typeOf: client.factory.organizationType.Corporation,
+            project: { typeOf: client.factory.organizationType.Project, id: project.id },
             id: 'agent-id',
             name: 'Pecorino SDK Sample',
             url: 'https://motionpicture.jp'
         },
         recipient: {
-            typeOf: 'Person',
+            typeOf: client.factory.personType.Person,
             id: 'recipient-id',
             name: 'recipient name',
             url: ''
         },
         object: {
-            amount: parseInt(amount, 10),
+            amount: { value: Number(amount) },
             description: notes,
             toLocation: {
-                accountType: accountType,
                 accountNumber: toAccountNumber
             }
         }
@@ -71,17 +77,17 @@ async function main() {
     await wait(1000);
 
     // 確定
-    await depositService.cancel({ typeOf: transaction.typeOf, transactionNumber: transactionNumber });
-    // await depositService.confirm({ typeOf: transaction.typeOf, transactionNumber: transactionNumber });
+    // await depositService.cancel({ transactionNumber });
+    await depositService.confirm({ transactionNumber });
     console.log('取引確定です。');
 }
 
-async function wait(waitInMilliseconds) {
+async function wait(waitInMilliseconds: number) {
     return new Promise((resolve) => setTimeout(resolve, waitInMilliseconds));
 }
 
-main().then(() => {
-    console.log('main processed.');
-}).catch((err) => {
-    console.error(err);
-});
+main()
+    .then(() => {
+        console.log('main processed.');
+    })
+    .catch(console.error);
